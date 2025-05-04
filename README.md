@@ -18,32 +18,6 @@ This project demonstrates how LLMs can be used to solve multi-step mathematical 
 - Support for different LLM models
 - Clean visualization of calculation steps
 
-## Project Structure
-
-```
-calculator-agent/
-├── config/                 # Configuration files
-│   ├── reducing_agent_config.yaml
-│   └── stepwise_agent_config.yaml
-├── src/                    # Source code
-│   ├── __init__.py         # Python package marker
-│   ├── agents/             # Agent implementations
-│   │   ├── reducing_agent.py
-│   │   ├── stepwise_agent.py
-│   │   ├── tool_call_result.py
-│   │   └── utility.py
-│   ├── llm/                # LLM client implementations
-│   │   ├── chatgpt.py
-│   │   └── llm_base.py
-│   ├── tools/              # Tool implementations
-│   │   └── calculator.py
-│   └── orchestrator.py     # Orchestrator for agent management
-├── app.py                  # Streamlit web interface
-├── tests/                  # Test files
-├── .env                    # Environment variables (API keys)
-└── requirements.txt        # Python dependencies
-```
-
 ## Setup
 
 1. Clone the repository
@@ -117,7 +91,3 @@ The calculator agent:
 - Replaces calculated parts with their results
 - Demonstrates incremental problem-solving
 - Shows remaining expression at each step
-
-## License
-
-This project is provided as an educational demo.
