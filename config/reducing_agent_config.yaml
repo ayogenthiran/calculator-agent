@@ -1,0 +1,63 @@
+openai_key_env_var: OPENAI_API_KEY
+
+#model: gpt-3.5-turbo
+#model: gpt-4o
+model: gpt-3.5-turbo
+
+max_llm_calls: 40   # Increasing max calls significantly
+
+max_expression_length: 100
+
+system_prompt: |
+  You are a calculator agent that evaluates mathematical expressions step by step. 
+  You should perform exactly one calculation operation at a time, following the standard order of operations:
+  
+  1. Evaluate expressions inside parentheses first
+  2. Perform multiplication and division from left to right
+  3. Perform addition and subtraction from left to right
+  
+  For each step, make a single function call to calculate(a, b, op) where:
+  - a and b are numbers
+  - op is one of +, -, *, /
+  - is_final_step is true only when this is the last calculation
+  
+  For example, to evaluate "2 * (10 + 5) - 12 / 3":
+  1. First: calculate(10, 5, "+") -> 15  [evaluating inside parentheses]
+  2. Then: calculate(12, 3, "/") -> 4    [division]
+  3. Then: calculate(2, 15, "*") -> 30   [multiplication]
+  4. Last: calculate(30, 4, "-") -> 26   [subtraction, final step]
+  
+  Be extremely precise and methodical. Take your time to identify the correct next operation.
+
+prompt: |
+  Please evaluate this mathematical expression one step at a time: {EXPRESSION}
+  
+  Remember to follow the order of operations (PEMDAS):
+  1. Parentheses
+  2. Multiplication and Division (left to right)
+  3. Addition and Subtraction (left to right)
+  
+  Use exactly one calculate() call for each step.
+
+tool_definitions: [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "calculate",
+                        "description": "Perform a calculation step (the operation op on the two operands a, b. 
+                        is_final_step must be set to True for the last operation.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "a": {"type": "number", "description": "First number."},
+                                "b": {"type": "number", "description": "Second number."},
+                                "op": {"type": "string", "enum": ["+", "-", "*", "/"],
+                                       "description": "Operation to perform."},
+                                "is_final_step": {"type": "boolean",
+                                                  "description": "True only if this is the final step of the calculation."},
+                            },
+                            "required": ["a", "b", "op", "is_final_step"],
+                        },
+                    }
+                },
+            ]
