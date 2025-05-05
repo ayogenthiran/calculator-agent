@@ -21,11 +21,17 @@ This project demonstrates how LLMs can be used to solve multi-step mathematical 
 ## Setup
 
 1. Clone the repository
-2. Install dependencies:
+2. Set up a virtual environment:
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   venv\Scripts\activate     # On Windows
+   ```
+3. Install dependencies:
    ```
    pip3 install -r requirements.txt
    ```
-3. Create a `.env` file with your OpenAI API key:
+4. Create a `.env` file with your OpenAI API key:
    ```
    OPENAI_API_KEY=your_api_key_here
    ```
